@@ -10,7 +10,7 @@ const userSchema = new Schema({
     unique: true,
     validate: {
       validator: (v) => validator.isEmail(v),
-      message: 'Поле "email" должно быть валидным url-адресом',
+      message: 'Поле "email" должно быть валидным email-адресом',
     },
   },
   password: {
