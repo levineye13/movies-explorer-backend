@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const { SERVER_PORT, DB_IP, DB_PORT, DB_NAME } = require('./config');
 const { DB_OPTIONS } = require('./utils/constants');
 const { returnMongoURI } = require('./utils/utils');
+const errorHandler = require('./middlewares/error-handler');
 
 const app = express();
 
@@ -18,5 +19,7 @@ app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(errorHandler);
 
 app.listen(SERVER_PORT);
