@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const { SERVER_PORT, DB_IP, DB_PORT, DB_NAME } = require('./config');
 
@@ -14,5 +15,8 @@ mongoose.connect(`mongodb://${DB_IP}:${DB_PORT}/${DB_NAME}`, {
 });
 
 app.use(cors());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.listen(SERVER_PORT);
