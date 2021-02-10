@@ -1,5 +1,37 @@
+const { hash, genSalt } = require('bcryptjs');
+
 const User = require('../models/user');
-const { NotFoundError, BadRequestError } = require('../errors');
+const { NotFoundError, BadRequestError, ConflictError } = require('../errors');
+
+const register = async (req, res, next) => {
+  const { email, password, name } = req.body;
+  try {
+    const user = await User.findOne({ email });
+
+    if (user) {
+      throw new ConflictError('Такой пользователь уже существует');
+    }
+
+    const salt = await genSalt(10);
+    const passwordHash = await hash(password, salt);
+    const newUser = await User.create({
+      email,
+      password: passwordHash,
+      name,
+    });
+
+    res.status(201).send({
+      email: newUser.email,
+      name: newUser.name,
+    });
+  } catch (err) {
+    next(
+      err.name === 'ValidationError'
+        ? new BadRequestError('Переданы некорректные данные')
+        : err
+    );
+  }
+};
 
 const getUser = async (req, res, next) => {
   const { _id } = req.user;
@@ -41,4 +73,4 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-module.exports = { getUser, updateUser };
+module.exports = { register, getUser, updateUser };
