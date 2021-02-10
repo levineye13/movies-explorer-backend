@@ -1,7 +1,8 @@
 const router = require('express').Router();
 
-const { getUser, updateUser } = require('../controllers/users');
+const { logout, getUser, updateUser } = require('../controllers/users');
 
+router.head('/signout', logout);
 router.get('/users/me', getUser);
 router.put('/users/me', updateUser);
 

@@ -75,6 +75,14 @@ const login = async (req, res, next) => {
   }
 };
 
+const logout = (req, res, next) => {
+  try {
+    res.status(204).clearCookie('jwt').end();
+  } catch (err) {
+    next(err);
+  }
+};
+
 const getUser = async (req, res, next) => {
   const { _id } = req.user;
 
@@ -115,4 +123,4 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-module.exports = { register, login, getUser, updateUser };
+module.exports = { register, login, logout, getUser, updateUser };
