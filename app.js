@@ -8,6 +8,7 @@ const { SERVER_PORT, DB_IP, DB_PORT, DB_NAME } = require('./config');
 const { DB_OPTIONS } = require('./utils/constants');
 const { returnMongoURI } = require('./utils/utils');
 const routes = require('./routes');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/error-handler');
 
 const app = express();
@@ -24,7 +25,11 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(requestLogger);
+
 app.use(routes);
+
+app.use(errorLogger);
 
 app.use(errorHandler);
 
