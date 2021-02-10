@@ -4,15 +4,15 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const { SERVER_PORT, DB_IP, DB_PORT, DB_NAME } = require('./config');
+const { DB_OPTIONS } = require('./utils/constants');
+const { returnMongoURI } = require('./utils/utils');
 
 const app = express();
 
-mongoose.connect(`mongodb://${DB_IP}:${DB_PORT}/${DB_NAME}`, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  returnMongoURI({ ip: DB_IP, port: DB_PORT, name: DB_NAME }),
+  DB_OPTIONS
+);
 
 app.use(cors());
 
