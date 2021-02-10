@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const { SERVER_PORT, DB_IP, DB_PORT, DB_NAME } = require('./config');
 
@@ -11,5 +12,7 @@ mongoose.connect(`mongodb://${DB_IP}:${DB_PORT}/${DB_NAME}`, {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
+
+app.use(cors());
 
 app.listen(SERVER_PORT);
