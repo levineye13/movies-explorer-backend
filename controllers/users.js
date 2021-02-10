@@ -1,7 +1,14 @@
-const { hash, genSalt } = require('bcryptjs');
+const { hash, genSalt, compare } = require('bcryptjs');
+const { sign } = require('jsonwebtoken');
 
 const User = require('../models/user');
-const { NotFoundError, BadRequestError, ConflictError } = require('../errors');
+const { JWT_SECRET } = require('../config');
+const {
+  NotFoundError,
+  BadRequestError,
+  ConflictError,
+  UnauthorizedError,
+} = require('../errors');
 
 const register = async (req, res, next) => {
   const { email, password, name } = req.body;
@@ -24,6 +31,41 @@ const register = async (req, res, next) => {
       email: newUser.email,
       name: newUser.name,
     });
+  } catch (err) {
+    next(
+      err.name === 'ValidationError'
+        ? new BadRequestError('Переданы некорректные данные')
+        : err
+    );
+  }
+};
+
+const login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email }).select('+password');
+    if (!user) {
+      throw new UnauthorizedError('Неправильные почта или пароль');
+    }
+
+    const isEqual = compare(password, user.password);
+    if (!isEqual) {
+      throw new UnauthorizedError('Неправильные почта или пароль');
+    }
+
+    const token = sign({ _id: user._id }, JWT_SECRET, {
+      expiresIn: '7d',
+    });
+
+    res
+      .status(204)
+      .cookie('jwt', `Bearer ${token}`, {
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        httpOnly: true,
+        sameSite: true,
+      })
+      .end();
   } catch (err) {
     next(
       err.name === 'ValidationError'
@@ -73,4 +115,4 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-module.exports = { register, getUser, updateUser };
+module.exports = { register, login, getUser, updateUser };
