@@ -51,10 +51,10 @@ const createMovie = async (req, res, next) => {
 };
 
 const deleteMovieById = async (req, res, next) => {
-  const { movieId } = req.params;
+  const { id } = req.params;
 
   try {
-    const deletedMovie = await Movie.findByIdAndDelete(movieId);
+    const deletedMovie = await Movie.findByIdAndDelete(id);
     return res.status(200).send(deletedMovie);
   } catch (err) {
     next(
