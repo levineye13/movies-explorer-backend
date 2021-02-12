@@ -6,27 +6,27 @@ const { Schema, model } = mongoose;
 const movieSchema = new Schema({
   country: {
     type: String,
-    required: true,
+    required: [true, 'Поле "country" должно быть заполнено'],
   },
   director: {
     type: String,
-    required: true,
+    required: [true, 'Поле "director" должно быть заполнено'],
   },
   duration: {
     type: Number,
-    required: true,
+    required: [true, 'Поле "duration" должно быть заполнено'],
   },
   year: {
     type: String,
-    required: true,
+    required: [true, 'Поле "year" должно быть заполнено'],
   },
   description: {
     type: String,
-    required: true,
+    required: [true, 'Поле "description" должно быть заполнено'],
   },
   image: {
     type: String,
-    required: true,
+    required: [true, 'Поле "image" должно быть заполнено'],
     validate: {
       validator: (v) => validator.isURL(v),
       message: 'Поле "image" должно быть валидным url-адресом',
@@ -34,7 +34,7 @@ const movieSchema = new Schema({
   },
   trailer: {
     type: String,
-    required: true,
+    required: [true, 'Поле "trailer" должно быть заполнено'],
     validate: {
       validator: (v) => validator.isURL(v),
       message: 'Поле "trailer" должно быть валидным url-адресом',
@@ -42,7 +42,7 @@ const movieSchema = new Schema({
   },
   thumbnail: {
     type: String,
-    required: true,
+    required: [true, 'Поле "thumbnail" должно быть заполнено'],
     validate: {
       validator: (v) => validator.isURL(v),
       message: 'Поле "thumbnail" должно быть валидным url-адресом',
@@ -56,11 +56,11 @@ const movieSchema = new Schema({
   },
   nameRU: {
     type: String,
-    required: true,
+    required: [true, 'Поле "nameRU" должно быть заполнено'],
   },
   nameEN: {
     type: String,
-    required: true,
+    required: [true, 'Поле "nameEN" должно быть заполнено'],
   },
 });
 
