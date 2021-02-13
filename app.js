@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const { errors } = require('celebrate');
 
 const { SERVER_PORT, DB_IP, DB_PORT, DB_NAME } = require('./config');
-const { DB_OPTIONS } = require('./utils/constants');
+const { DB_OPTIONS, CORS_OPTIONS } = require('./utils/constants');
 const { returnMongoURI } = require('./utils/utils');
 const routes = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -30,6 +31,8 @@ app.use(requestLogger);
 app.use(routes);
 
 app.use(errorLogger);
+
+app.use(errors());
 
 app.use(errorHandler);
 
