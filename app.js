@@ -19,7 +19,7 @@ mongoose.connect(
   DB_OPTIONS
 );
 
-app.use(cors());
+app.use(cors(CORS_OPTIONS));
 
 app.use(cookieParser());
 
