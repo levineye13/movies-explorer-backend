@@ -1,5 +1,5 @@
 const Movie = require('../models/movie');
-const { NotFoundError, BadRequestError } = require('../errors');
+const { NotFoundError, BadRequestError, ForbiddenError } = require('../errors');
 
 const getMovies = async (req, res, next) => {
   try {
@@ -51,10 +51,18 @@ const createMovie = async (req, res, next) => {
 };
 
 const deleteMovieById = async (req, res, next) => {
-  const { id } = req.params;
+  const { id: movieId } = req.params;
+  const { _id } = req.user;
 
   try {
-    const deletedMovie = await Movie.findByIdAndDelete(id);
+    const movie = await Movie.findById(movieId).select('+owner');
+    const ownerId = movie.owner.toString();
+
+    if (ownerId !== _id) {
+      throw new ForbiddenError('Недостаточно прав для удаления');
+    }
+
+    const deletedMovie = await Movie.findByIdAndDelete(movieId);
     return res.status(200).send(deletedMovie);
   } catch (err) {
     next(
