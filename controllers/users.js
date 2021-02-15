@@ -3,9 +3,9 @@ const { sign } = require('jsonwebtoken');
 
 const User = require('../models/user');
 const { JWT_SECRET } = require('../config');
+const { checkMongoError } = require('../utils/utils');
 const {
   NotFoundError,
-  BadRequestError,
   ConflictError,
   UnauthorizedError,
 } = require('../errors');
@@ -32,11 +32,7 @@ const register = async (req, res, next) => {
       name: newUser.name,
     });
   } catch (err) {
-    next(
-      err.name === 'ValidationError'
-        ? new BadRequestError('Переданы некорректные данные')
-        : err
-    );
+    next(checkMongoError(err));
   }
 };
 
@@ -67,11 +63,7 @@ const login = async (req, res, next) => {
       })
       .end();
   } catch (err) {
-    next(
-      err.name === 'ValidationError'
-        ? new BadRequestError('Переданы некорректные данные')
-        : err
-    );
+    next(checkMongoError(err));
   }
 };
 
@@ -93,7 +85,7 @@ const getUser = async (req, res, next) => {
     }
     return res.status(200).send(user);
   } catch (err) {
-    next(err);
+    next(checkMongoError(err));
   }
 };
 
@@ -115,11 +107,7 @@ const updateUser = async (req, res, next) => {
     );
     return res.status(200).send(updatedUser);
   } catch (err) {
-    next(
-      err.name === 'ValidationError'
-        ? new BadRequestError('Переданы некорректные данные')
-        : err
-    );
+    next(checkMongoError(err));
   }
 };
 

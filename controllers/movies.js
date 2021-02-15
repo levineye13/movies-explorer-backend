@@ -1,5 +1,5 @@
 const Movie = require('../models/movie');
-const { NotFoundError, BadRequestError, ForbiddenError } = require('../errors');
+const { NotFoundError, ForbiddenError } = require('../errors');
 
 const getMovies = async (req, res, next) => {
   try {
@@ -42,11 +42,7 @@ const createMovie = async (req, res, next) => {
     });
     return res.status(201).send(newMovie);
   } catch (err) {
-    next(
-      err.name === 'ValidationError'
-        ? new BadRequestError('Переданы некорректные данные')
-        : err
-    );
+    next(checkMongoError(err));
   }
 };
 
@@ -65,11 +61,7 @@ const deleteMovieById = async (req, res, next) => {
     const deletedMovie = await Movie.findByIdAndDelete(movieId);
     return res.status(200).send(deletedMovie);
   } catch (err) {
-    next(
-      err.name === 'CastError'
-        ? new BadRequestError('Переданы некорректные данные')
-        : err
-    );
+    next(checkMongoError(err));
   }
 };
 
