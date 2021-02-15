@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
@@ -23,6 +24,8 @@ mongoose.connect(
 app.use(limiter);
 
 app.use(cors(CORS_OPTIONS));
+
+app.use(helmet());
 
 app.use(cookieParser());
 
