@@ -55,7 +55,7 @@ const movieSchema = new Schema({
     select: false,
   },
   movieId: {
-    type: Schema.Types.ObjectId,
+    type: String,
     required: true,
     select: false,
   },
