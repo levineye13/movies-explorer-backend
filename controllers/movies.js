@@ -2,12 +2,13 @@ const { ObjectId } = require('mongoose').Types;
 
 const Movie = require('../models/movie');
 const { NotFoundError, ForbiddenError } = require('../errors');
+const { checkMongoError } = require('../utils/utils');
 
 const getMovies = async (req, res, next) => {
   const { _id } = req.user;
 
   try {
-    const movies = await Movie.find({ owner: ObjectId(_id) }).select('+owner');
+    const movies = await Movie.find({ owner: ObjectId(_id) });
     if (movies.length === 0) {
       throw new NotFoundError('Пока что фильмов нет');
     }
