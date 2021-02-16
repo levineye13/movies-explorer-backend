@@ -109,8 +109,8 @@ const updateUser = async (req, res, next) => {
       }
     );
     return res.status(200).send({
-      email: user.email,
-      name: user.name,
+      email: updatedUser.email,
+      name: updatedUser.name,
     });
   } catch (err) {
     next(checkMongoError(err));
