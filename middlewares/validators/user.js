@@ -12,11 +12,12 @@ const validateRegistration = celebrate({
     password: Joi.string().required().messages({
       'any.required': 'Поле "password" должно быть заполнено',
     }),
-    name: Joi.string().required().min(2).max(30).messages({
-      'any.required': 'Поле "name" должно быть заполнено',
-      'string.min': 'Минимальная длина поля "name" - 2',
-      'string.max': 'Максимальная длина поля "name" - 30',
-    }),
+    name: Joi.string().required().min(2).max(30)
+      .messages({
+        'any.required': 'Поле "name" должно быть заполнено',
+        'string.min': 'Минимальная длина поля "name" - 2',
+        'string.max': 'Максимальная длина поля "name" - 30',
+      }),
   }),
 });
 
@@ -44,11 +45,12 @@ const validateUserUpdate = celebrate({
       .messages({
         'any.required': 'Поле "email" должно быть заполнено',
       }),
-    name: Joi.string().required().min(2).max(30).messages({
-      'any.required': 'Поле "name" должно быть заполнено',
-      'string.min': 'Минимальная длина поля "name" - 2',
-      'string.max': 'Максимальная длина поля "name" - 30',
-    }),
+    name: Joi.string().required().min(2).max(30)
+      .messages({
+        'any.required': 'Поле "name" должно быть заполнено',
+        'string.min': 'Минимальная длина поля "name" - 2',
+        'string.max': 'Максимальная длина поля "name" - 30',
+      }),
   }),
 });
 

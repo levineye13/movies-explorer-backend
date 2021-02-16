@@ -5,9 +5,7 @@ const validateObjectId = celebrate({
   params: Joi.object().keys({
     id: Joi.string()
       .required()
-      .custom((value, helpers) =>
-        isValid(value) ? value : helpers.message('Невалидный id')
-      ),
+      .custom((value, helpers) => (isValid(value) ? value : helpers.message('Невалидный id'))),
   }),
 });
 

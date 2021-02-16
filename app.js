@@ -7,7 +7,9 @@ const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 
 const limiter = require('./middlewares/rate-limiter');
-const { SERVER_PORT, DB_IP, DB_PORT, DB_NAME } = require('./config');
+const {
+  SERVER_PORT, DB_IP, DB_PORT, DB_NAME,
+} = require('./config');
 const { DB_OPTIONS, CORS_OPTIONS } = require('./utils/constants');
 const { returnMongoURI } = require('./utils/utils');
 const routes = require('./routes');
@@ -18,7 +20,7 @@ const app = express();
 
 mongoose.connect(
   returnMongoURI({ ip: DB_IP, port: DB_PORT, name: DB_NAME }),
-  DB_OPTIONS
+  DB_OPTIONS,
 );
 
 app.use(limiter);

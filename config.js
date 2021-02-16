@@ -9,4 +9,6 @@ const {
   DB_NAME = 'moviesExplorer',
 } = process.env;
 
-module.exports = { NODE_ENV, JWT_SECRET, SERVER_PORT, DB_IP, DB_PORT, DB_NAME };
+module.exports = {
+  NODE_ENV, JWT_SECRET, SERVER_PORT, DB_IP, DB_PORT, DB_NAME,
+};

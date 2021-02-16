@@ -91,7 +91,7 @@ const getUser = async (req, res, next) => {
       name: user.name,
     });
   } catch (err) {
-    next(checkMongoError(err));
+    return next(checkMongoError(err));
   }
 };
 
@@ -109,15 +109,21 @@ const updateUser = async (req, res, next) => {
       {
         new: true,
         runValidators: true,
-      }
+      },
     );
     return res.status(200).send({
       email: updatedUser.email,
       name: updatedUser.name,
     });
   } catch (err) {
-    next(checkMongoError(err));
+    return next(checkMongoError(err));
   }
 };
 
-module.exports = { register, login, logout, getUser, updateUser };
+module.exports = {
+  register,
+  login,
+  logout,
+  getUser,
+  updateUser,
+};

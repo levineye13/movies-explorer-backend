@@ -17,7 +17,7 @@ const getMovies = async (req, res, next) => {
     }
     return res.status(200).send(movies);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -48,13 +48,13 @@ const createMovie = async (req, res, next) => {
       trailer,
       thumbnail,
       owner: _id,
-      movieId: '602c10f2955a2fb73f2f0629', //!Пока нет ответа сервиса MoviesExplorer.
+      movieId: '602c10f2955a2fb73f2f0629', //! Пока нет ответа сервиса MoviesExplorer.
       nameRU,
       nameEN,
     });
     return res.status(201).send(newMovie);
   } catch (err) {
-    next(checkMongoError(err));
+    return next(checkMongoError(err));
   }
 };
 
@@ -73,7 +73,7 @@ const deleteMovieById = async (req, res, next) => {
     const deletedMovie = await Movie.findByIdAndDelete(movieId);
     return res.status(200).send(deletedMovie);
   } catch (err) {
-    next(checkMongoError(err));
+    return next(checkMongoError(err));
   }
 };
 

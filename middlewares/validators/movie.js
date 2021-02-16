@@ -18,21 +18,15 @@ const validateCreateMovie = celebrate({
     description: Joi.string().required().messages({
       'any.required': 'Поле "description" должно быть заполнено',
     }),
-    image: Joi.string().custom((value, helpers) =>
-      validator.isURL(value)
-        ? value
-        : helpers.message('Поле "image" должно быть валидным url-адресом')
-    ),
-    trailer: Joi.string().custom((value, helpers) =>
-      validator.isURL(value)
-        ? value
-        : helpers.message('Поле "trailer" должно быть валидным url-адресом')
-    ),
-    thumbnail: Joi.string().custom((value, helpers) =>
-      validator.isURL(value)
-        ? value
-        : helpers.message('Поле "thumbnail" должно быть валидным url-адресом')
-    ),
+    image: Joi.string().custom((value, helpers) => (validator.isURL(value)
+      ? value
+      : helpers.message('Поле "image" должно быть валидным url-адресом'))),
+    trailer: Joi.string().custom((value, helpers) => (validator.isURL(value)
+      ? value
+      : helpers.message('Поле "trailer" должно быть валидным url-адресом'))),
+    thumbnail: Joi.string().custom((value, helpers) => (validator.isURL(value)
+      ? value
+      : helpers.message('Поле "thumbnail" должно быть валидным url-адресом'))),
     nameRU: Joi.string().required().messages({
       'any.required': 'Поле "nameRU" должно быть заполнено',
     }),
