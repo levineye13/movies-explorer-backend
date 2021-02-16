@@ -3,6 +3,9 @@ const { ObjectId } = require('mongoose').Types;
 const Movie = require('../models/movie');
 const { NotFoundError, ForbiddenError } = require('../errors');
 const { checkMongoError } = require('../utils/utils');
+const {
+  HTTP_MESSAGES: { notFound, forbidden },
+} = require('../utils/constants');
 
 const getMovies = async (req, res, next) => {
   const { _id } = req.user;
@@ -10,7 +13,7 @@ const getMovies = async (req, res, next) => {
   try {
     const movies = await Movie.find({ owner: ObjectId(_id) });
     if (movies.length === 0) {
-      throw new NotFoundError('Пока что фильмов нет');
+      throw new NotFoundError(notFound);
     }
     return res.status(200).send(movies);
   } catch (err) {
@@ -64,7 +67,7 @@ const deleteMovieById = async (req, res, next) => {
     const ownerId = movie.owner.toString();
 
     if (ownerId !== _id) {
-      throw new ForbiddenError('Недостаточно прав для удаления');
+      throw new ForbiddenError(forbidden);
     }
 
     const deletedMovie = await Movie.findByIdAndDelete(movieId);

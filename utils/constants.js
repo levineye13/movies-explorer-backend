@@ -20,3 +20,13 @@ module.exports.CORS_OPTIONS = {
   methods: ['OPTIONS', 'HEAD', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   credentials: true,
 };
+
+module.exports.HTTP_MESSAGES = {
+  badRequest: ' Некорректный запрос.',
+  unauthorized: 'Не авторизован.',
+  forbidden: 'Запрещено.',
+  notFound: 'Не найден.',
+  conflict: 'Конфликт.',
+  tooManyRequests: 'Слишком много запросов.',
+  internalServerError: 'Внутренняя ошибка сервера.',
+};

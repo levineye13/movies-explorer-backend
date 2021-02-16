@@ -1,7 +1,11 @@
+const {
+  HTTP_MESSAGES: { internalServerError },
+} = require('../utils/constants');
+
 class InternalServerError extends Error {
   constructor() {
     super();
-    this.message = 'На сервере произошла ошибка';
+    this.message = internalServerError;
     this.statusCode = 500;
   }
 }

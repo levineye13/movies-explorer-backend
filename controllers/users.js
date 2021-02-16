@@ -9,6 +9,9 @@ const {
   ConflictError,
   UnauthorizedError,
 } = require('../errors');
+const {
+  HTTP_MESSAGES: { conflict, notFound },
+} = require('../utils/constants');
 
 const register = async (req, res, next) => {
   const { email, password, name } = req.body;
@@ -16,7 +19,7 @@ const register = async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (user) {
-      throw new ConflictError('Такой пользователь уже существует');
+      throw new ConflictError(conflict);
     }
 
     const salt = await genSalt(10);
@@ -81,7 +84,7 @@ const getUser = async (req, res, next) => {
   try {
     const user = await User.findById(_id);
     if (!user) {
-      throw new NotFoundError('Пользователь не найден');
+      throw new NotFoundError(notFound);
     }
     return res.status(200).send({
       email: user.email,
