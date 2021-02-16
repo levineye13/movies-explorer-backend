@@ -45,7 +45,7 @@ const login = async (req, res, next) => {
       throw new UnauthorizedError('Неправильные почта или пароль');
     }
 
-    const isEqual = compare(password, user.password);
+    const isEqual = await compare(password, user.password);
     if (!isEqual) {
       throw new UnauthorizedError('Неправильные почта или пароль');
     }
