@@ -83,7 +83,10 @@ const getUser = async (req, res, next) => {
     if (!user) {
       throw new NotFoundError('Пользователь не найден');
     }
-    return res.status(200).send(user);
+    return res.status(200).send({
+      email: user.email,
+      name: user.name,
+    });
   } catch (err) {
     next(checkMongoError(err));
   }
@@ -105,7 +108,10 @@ const updateUser = async (req, res, next) => {
         runValidators: true,
       }
     );
-    return res.status(200).send(updatedUser);
+    return res.status(200).send({
+      email: user.email,
+      name: user.name,
+    });
   } catch (err) {
     next(checkMongoError(err));
   }
