@@ -54,6 +54,11 @@ const movieSchema = new Schema({
     required: true,
     select: false,
   },
+  movieId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    select: false,
+  },
   nameRU: {
     type: String,
     required: [true, 'Поле "nameRU" должно быть заполнено'],
