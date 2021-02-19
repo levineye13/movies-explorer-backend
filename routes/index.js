@@ -18,8 +18,8 @@ router.post('/signin', validateAuthorization, login);
 router.use(auth);
 router.use(userRouter);
 router.use(movieRouter);
-router.all('*', () => {
-  throw new NotFoundError(notFound);
+router.all('*', (req, res, next) => {
+  next(new NotFoundError(notFound));
 });
 
 module.exports = router;
