@@ -48,7 +48,7 @@ const createMovie = async (req, res, next) => {
       trailer,
       thumbnail,
       owner: _id,
-      movieId: '602c10f2955a2fb73f2f0629', //! Пока нет ответа сервиса MoviesExplorer.
+      movieId: Math.floor(Math.random() * 100), //! Пока нет ответа сервиса MoviesExplorer.
       nameRU,
       nameEN,
     });

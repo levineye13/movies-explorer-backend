@@ -55,9 +55,13 @@ const movieSchema = new Schema({
     select: false,
   },
   movieId: {
-    type: String,
+    type: Number,
     required: true,
     select: false,
+    validate: {
+      validator: (v) => Number.isInteger(v) && Math.sign(v) >= 0,
+      message: 'Поле "movieId" должно быть целым положительным числом',
+    },
   },
   nameRU: {
     type: String,
