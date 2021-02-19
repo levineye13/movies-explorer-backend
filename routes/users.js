@@ -5,6 +5,6 @@ const { logout, getUser, updateUser } = require('../controllers/users');
 
 router.head('/signout', logout);
 router.get('/users/me', getUser);
-router.put('/users/me', validateUserUpdate, updateUser);
+router.patch('/users/me', validateUserUpdate, updateUser);
 
 module.exports = router;
