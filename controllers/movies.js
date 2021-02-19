@@ -66,12 +66,20 @@ const deleteMovieById = async (req, res, next) => {
     const movie = await Movie.findById(movieId).select('+owner');
     const ownerId = movie.owner.toString();
 
+    if (!movie) {
+      throw new NotFoundError(notFound);
+    }
+
     if (ownerId !== _id) {
       throw new ForbiddenError(forbidden);
     }
 
-    const deletedMovie = await Movie.findByIdAndDelete(movieId);
-    return res.status(200).send(deletedMovie);
+    await Movie.deleteOne(movie);
+    return res.status(200).send({
+      _id: movie._id,
+      nameRU: movie.nameRU,
+      nameEN: movie.nameEN,
+    });
   } catch (err) {
     return next(checkMongoError(err));
   }
