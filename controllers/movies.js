@@ -65,11 +65,12 @@ const deleteMovieById = async (req, res, next) => {
 
   try {
     const movie = await Movie.findById(movieId).select('+owner');
-    const ownerId = movie.owner.toString();
 
     if (!movie) {
       throw new NotFoundError(notFound);
     }
+
+    const ownerId = movie.owner.toString();
 
     if (ownerId !== _id) {
       throw new ForbiddenError(forbidden);
