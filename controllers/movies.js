@@ -31,6 +31,7 @@ const createMovie = async (req, res, next) => {
     image,
     trailer,
     thumbnail,
+    movieId,
     nameRU,
     nameEN,
   } = req.body;
@@ -48,7 +49,7 @@ const createMovie = async (req, res, next) => {
       trailer,
       thumbnail,
       owner: _id,
-      movieId: Math.floor(Math.random() * 100), //! Пока нет ответа сервиса MoviesExplorer.
+      movieId,
       nameRU,
       nameEN,
     });
